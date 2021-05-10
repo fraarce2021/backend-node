@@ -1,0 +1,18 @@
+{
+  "name": "backendnode",
+  "version": "0.1.0",
+  "description": "Chat similir al de Telegram",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chat",
+    "telegram"
+  ],
+  "author": "Daniel Francisco Arce Chavarria",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
