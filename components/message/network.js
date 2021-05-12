@@ -4,21 +4,22 @@ const controller = require('../message/controller');
 const router = express.Router();
 
 router.get('/', (req,res)=>{
-    console.log(req.headers);
-    res.header({
-        "custom-header":"Nuestro valor personalizado",
-    });
-    response.success(req,res,'Lista de mensajes');
+    controller.getMessages()
+    .then((messageList)=>{
+        response.success(req,res,messageList,200)
+    })
+    .catch(e=>{
+        response.error(req,res,"Unexpected Error", 500, e)
+    })
 });
 
 router.post('/', (req,res)=>{
-    
     controller.addMessage(req.body.user, req.body.message)
     .then((fullMessage)=>{
         response.success(req,res,fullMessage,201);
     })
     .catch(e => {
-        response.error(req,res,'Informacion invalida',400, 'Error en el controlador');
+        response.error(req,res,'Informacion invalida',400, 'Error en el controlador'+e);
     })
 });
 
