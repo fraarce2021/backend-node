@@ -1,8 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-// const router = require('./components/message/network');
+const db = require('./db');
+
 const router = require('./network/routes');
+
+db('mongodb+srv://user:user1234@telegram.bqfbb.mongodb.net/MyDatabase?retryWrites=true&w=majority');
 
 let app = express();
 app.use(bodyParser.urlencoded({extended: false}));

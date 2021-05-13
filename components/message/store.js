@@ -1,38 +1,40 @@
-// const db = require('mongoose')
-
-// db.Promise = global.Promise;
-// db.connect('mongodb+srv://user:user1234@telegram.bqfbb.mongodb.net/telegram?retryWrites=true&w=majority', {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-// }).catch(e=>console.log(e));
-// console.log('[db] Conectada con éxito');
-
-const MongoClient = require('mongodb').MongoClient;
 const Model = require('./model');
-const uri = "mongodb+srv://user:user1234@telegram.bqfbb.mongodb.net/telegram?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-client.connect(err => {
-  const collection = client.db("telegram").collection("telegram");
-  // perform actions on the collection object
-//   client.close();
-});
 
 const addMessage = (message) => {
-    // list.push(message);
     const myMessage = new Model(message);
-    myMessage.save().catch(e=>console.log(e));
+    myMessage.save()
+    .catch(e=>console.log(e));
 }
 
-const getMessage = () =>{
-    return list;
+ const getMessage = async (filterUser) =>{
+     let filter = {};
+     if(filterUser !== null){
+         filter = {user : filterUser};
+     }
+    const messages = await Model.find(filter);
+    return messages;
 }
 
+ const updateText = async (id, message) => {
+     const foundMessage = await Model.findOne({
+         _id: id
+     });
 
+     foundMessage.message = message;
+     const newMessage = await foundMessage.save();
+     return newMessage;
+ }
+
+const removeMessage = async (id) => {
+    console.log(id);
+    return Model.deleteOne({
+        _id: id
+    });
+}
 
 module.exports = {
     add: addMessage,
     list: getMessage,
-    // get
-    // update
-    // delete
+    updateText: updateText,
+    remove: removeMessage,
 }
