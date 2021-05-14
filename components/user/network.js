@@ -3,6 +3,16 @@ const response = require('../../network/response');
 const controller = require('../user/controller');
 const router = express.Router();
 
+router.get('/', (req,res)=>{
+    controller.listUsers()
+    .then(users=>{
+        response.success(req,res,users,200);
+    })
+    .catch(err => {
+        response.error(req,res,'Internal error', 500, err);
+    });
+}), 
+
 router.post('/', (req,res)=>{
     controller.addUser(req.body.name)
     .then((data) => {

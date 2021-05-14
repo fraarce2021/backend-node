@@ -6,6 +6,11 @@ const addUser = (user) => {
     .catch(e=>console.log(e));
 }
 
+const listUsers = () =>{
+    return Model.find();
+}
+
 module.exports = {
     add: addUser,
+    list: listUsers,
 }
